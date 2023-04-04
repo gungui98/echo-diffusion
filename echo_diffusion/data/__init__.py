@@ -1,0 +1,1 @@
+from echo_diffusion.data.dummy import DummyDataset
