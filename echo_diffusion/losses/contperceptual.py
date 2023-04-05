@@ -5,9 +5,9 @@ import torch.nn as nn
 from torchvision import models
 from collections import namedtuple
 
-from echo_diffusion.modules.discriminator.model import NLayerDiscriminator, weights_init
-from echo_diffusion.modules.losses.lpips import LPIPS
-from echo_diffusion.modules.losses.vqperceptual import hinge_d_loss, vanilla_d_loss, adopt_weight
+from echo_diffusion.losses.discriminator.model import NLayerDiscriminator, weights_init
+from echo_diffusion.losses.lpips import LPIPS
+from echo_diffusion.losses.vqperceptual import hinge_d_loss, vanilla_d_loss, adopt_weight
 
 
 class LPIPSWithDiscriminator(nn.Module):

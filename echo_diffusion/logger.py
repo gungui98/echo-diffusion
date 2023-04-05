@@ -5,6 +5,7 @@ import pytorch_lightning as pl
 import torch
 import torchvision
 from PIL import Image
+import wandb
 from pytorch_lightning import Callback
 from pytorch_lightning.utilities import rank_zero_only
 
@@ -34,8 +35,8 @@ class ImageLogger(Callback):
             grid = (grid + 1.0) / 2.0  # -1,1 -> 0,1; c,h,w
 
             tag = f"{split}/{k}"
-            pl_module.logger.log({
-                tag: pl_module.logger.experiment.Image(grid)},
+            pl_module.logger.experiment.log({
+                tag: wandb.Image(grid)},
             step=pl_module.global_step)
 
     @rank_zero_only

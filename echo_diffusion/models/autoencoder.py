@@ -1,11 +1,9 @@
-import torch
 import pytorch_lightning as pl
+import torch
 import torch.nn.functional as F
-from contextlib import contextmanager
 
 from echo_diffusion.distribution import DiagonalGaussianDistribution
 from echo_diffusion.models.blocks import Encoder, Decoder
-from echo_diffusion.modules.vqvae.quantize import VectorQuantizer2 as VectorQuantizer
 from echo_diffusion.utils import instantiate_from_config
 
 

@@ -1,7 +1,7 @@
 trainer:
   ckpt_path: null
   gpus: 1
-  max_epochs: 1
+  max_epochs: 10
   seed: 42
 
 model:
@@ -19,27 +19,29 @@ model:
 
     ddconfig:
       double_z: True
-      z_channels: 64
+      z_channels: 8
       resolution: 256
       in_channels: 3
       out_ch: 3
       ch: 128
-      ch_mult: [ 1,1,2,2,4,4]  # num_down = len(ch_mult)-1
+      ch_mult: [ 1,2,4,4]  # num_down = len(ch_mult)-1
       num_res_blocks: 2
       attn_resolutions: [16,8]
       dropout: 0.0
 
 data:
-  batch_size: 12
+  batch_size: 24
   num_workers: 4
   wrap: True
   train:
-    target: echo_diffusion.data.DummyDataset
+    target: echo_diffusion.data.EchoDataset
     params:
+      data_dir: /home/jovyan/data/camus_cityscape_format/train/images/
       img_size: 64
   validation:
-    target: echo_diffusion.data.DummyDataset
+    target: echo_diffusion.data.EchoDataset
     params:
+      data_dir: /home/jovyan/data/camus_cityscape_format/test/images/
       img_size: 64
 
 
