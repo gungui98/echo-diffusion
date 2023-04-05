@@ -1,1 +1,1 @@
-from echo_diffusion.modules.losses.contperceptual import LPIPSWithDiscriminator
+from echo_diffusion.losses.contperceptual import LPIPSWithDiscriminator
