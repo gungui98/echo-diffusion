@@ -12,7 +12,7 @@ class EchoDataset(Dataset):
         self.img_size = img_size
         # glob all images in data_dir
         self.img_paths = glob.glob(os.path.join(self.data_dir, "*/*.jpg"))
-        self.segmap_paths = [p.replace("images", "segmaps").replace(".jpg", ".png")
+        self.segmap_paths = [p.replace("images", "seg_maps").replace(".jpg", ".png")
                              for p in self.img_paths]
         self.data = list(zip(self.img_paths, self.segmap_paths))
 
