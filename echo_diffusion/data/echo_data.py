@@ -27,7 +27,7 @@ class EchoDataset(Dataset):
         mask = imageio.imread(segmap_path, pilmode="L")
         # resize image to img_size
         img = torch.from_numpy(img).permute(2, 0, 1).float() / 255.0
-        mask = torch.from_numpy(mask).long()
+        mask = torch.from_numpy(mask).float()
 
         img = torch.nn.functional.interpolate(img[None], size=self.img_size,
                                               mode="bilinear", align_corners=False)[0]
