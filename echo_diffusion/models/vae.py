@@ -60,6 +60,8 @@ class EchoVAE(pl.LightningModule):
         self.decode_seg = True
 
         self._dice = DiceLoss()
+        self.img_reconstruction_loss = nn.MSELoss()
+        self.attr_reg = False
 
     def encode_dataset(self, datamodule, progress_bar: bool = False):
         """Encodes masks from the train and val sets of a dataset in the latent space learned by an CLIP model.
@@ -134,15 +136,13 @@ class EchoVAE(pl.LightningModule):
     def training_step(self, batch, batch_nb):
         self.is_val_step = False
         loss_dict = self.trainval_step(batch, batch_nb)
-        loss_dict = {f"train_{k}": v for k, v in loss_dict.items()}
-        self.log_dict(loss_dict, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        self.log_dict({f"train_{k}": v for k, v in loss_dict.items()}, on_step=True, on_epoch=True, prog_bar=True, logger=True)
         return loss_dict
 
     def validation_step(self, batch, batch_nb):
         self.is_val_step = True
         loss_dict = self.trainval_step(batch, batch_nb)
-        loss_dict = {f"val_{k}": v for k, v in loss_dict.items()}
-        self.log_dict(loss_dict, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        self.log_dict({f"val_{k}": v for k, v in loss_dict.items()}, on_step=True, on_epoch=True, prog_bar=True, logger=True)
         return loss_dict
 
     def trainval_step(self, batch: Any, batch_nb: int):
@@ -252,7 +252,7 @@ class EchoVAE(pl.LightningModule):
 
             if self.is_val_step and batch_nb == 0:
                 self.log_images(title='Sample (img)', num_images=5,
-                                axes_content={'Image': img.cpu().squeeze().numpy(),
+                                img_dict={'Image': img.cpu().squeeze().numpy(),
                                               'Pred': img_recon.squeeze().detach().cpu().numpy()})
 
             loss += img_vae_loss
