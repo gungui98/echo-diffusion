@@ -10,7 +10,7 @@ from echo_diffusion.logger import ImageLogger
 
 
 # using hydra to manage configs
-@hydra.main(config_path='configs', config_name='autoencoder')
+@hydra.main(config_path='configs', config_name='vae')
 def main(cfg):
     pl.seed_everything(cfg.trainer.seed)
     model = instantiate_from_config(cfg.model)
@@ -30,7 +30,7 @@ def main(cfg):
         logger=WandbLogger(),
         enable_checkpointing=True,
         resume_from_checkpoint=cfg.trainer.ckpt_path,
-        callbacks=[ImageLogger(batch_frequency=1, max_images=4, clamp=True)],
+        # callbacks=[ImageLogger(batch_frequency=1, max_images=4, clamp=True)],
     )
     trainer.fit(model, data)
 
