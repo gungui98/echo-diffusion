@@ -56,9 +56,9 @@ data:
     target: echo_diffusion.data.EchoDataset
     params:
       data_dir: /home/jovyan/data/camus_cityscape_format/train/images/
-      img_size: 128
+      img_size: 256
   validation:
     target: echo_diffusion.data.EchoDataset
     params:
       data_dir: /home/jovyan/data/camus_cityscape_format/test/images/
-      img_size: 128
+      img_size: 256
