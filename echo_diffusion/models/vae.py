@@ -292,8 +292,7 @@ class EchoVAE(pl.LightningModule):
                 images = matplotlib.cm.get_cmap('viridis')(img_dict[k])[..., :3]
             vis_image = np.vstack(images[0:num_images])
             self.logger.experiment.log({
-                title: wandb.Image(vis_image)},
-                step=self.global_step)
+                title: wandb.Image(vis_image)})
 
     @staticmethod
     def reparameterize(mu: torch.Tensor, logvar: torch.Tensor) -> torch.Tensor:
