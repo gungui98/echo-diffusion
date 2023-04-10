@@ -17,9 +17,9 @@ model:
 
     encoder_img_params:
       image_size: 256
-      in_channels: 3
+      in_channels: 1
       blocks: 6
-      init_channels: 48
+      init_channels: 32
       latent_dim: 64
       use_batchnorm: True
       output_distribution: False
@@ -28,23 +28,23 @@ model:
       image_size: 256
       out_channels: 3
       blocks: 6
-      init_channels: 48
+      init_channels: 32
       latent_dim: 64
 
     encoder_seg_params:
       image_size: 256
-      in_channels: 4
+      in_channels: 3
       blocks: 4
-      init_channels: 48
+      init_channels: 32
       latent_dim: 16
       use_batchnorm: True
       output_distribution: False
 
     decoder_seg_params:
       image_size: 256
-      out_channels: 4
+      out_channels: 3
       blocks: 4
-      init_channels: 48
+      init_channels: 32
       latent_dim: 16
 
 

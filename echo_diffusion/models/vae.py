@@ -45,7 +45,7 @@ class EchoVAE(pl.LightningModule):
         # project latent space into same dimension, using to train clip model
         img_latent_size = 64
         seg_latent_size = 16
-        latent_size = 16
+        latent_size = 8
         self.img_proj = nn.Linear(img_latent_size, latent_size)
         self.seg_proj = nn.Linear(seg_latent_size, latent_size)
 
@@ -58,7 +58,7 @@ class EchoVAE(pl.LightningModule):
         self.interpolation_augmentation_samples = 0
         self.linear_constraint_weight = 0
 
-        self.decode_img = True
+        self.decode_img = False
         self.decode_seg = True
 
         self._dice = DiceLoss()
