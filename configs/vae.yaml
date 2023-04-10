@@ -8,6 +8,8 @@ model:
   base_learning_rate: 4.5e-6
   target: echo_diffusion.models.vae.EchoVAE
   params:
+    decode_image: false
+    decode_seg: true
     loss_params:
       cross_entropy_weight: 0.1
       dice_weight: 1

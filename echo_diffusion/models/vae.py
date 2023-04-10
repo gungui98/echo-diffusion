@@ -26,6 +26,8 @@ class EchoVAE(pl.LightningModule):
                  encoder_seg_params=None,
                  decoder_img_params=None,
                  decoder_seg_params=None,
+                 decode_image=True,
+                 decode_seg=True,
                  image_key="image",
                  segmap_key="segmap",
                  loss_params=None,
@@ -58,8 +60,8 @@ class EchoVAE(pl.LightningModule):
         self.interpolation_augmentation_samples = 0
         self.linear_constraint_weight = 0
 
-        self.decode_img = False
-        self.decode_seg = True
+        self.decode_img = decode_image
+        self.decode_seg = decode_seg
 
         self._dice = DiceLoss()
         self.img_reconstruction_loss = nn.MSELoss()
