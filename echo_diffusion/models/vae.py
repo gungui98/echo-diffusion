@@ -153,7 +153,7 @@ class EchoVAE(pl.LightningModule):
         img, seg = batch[self.image_key], batch[self.segmap_key]
         # check if input is correct shape
         if img.shape[1] != self.img_encoder.in_channels:
-            img = einops.rearrange(img, 'b h w c -> b c h w')
+            img = einops.rearrange(img, 'b h w -> b 1 h w')
         seg_onehot = to_onehot(seg, num_classes=self.seg_encoder.in_channels).float()
         logs = {}
         batch_size = img.shape[0]
