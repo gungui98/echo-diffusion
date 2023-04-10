@@ -8,6 +8,7 @@ import torch.nn.functional as F
 import pytorch_lightning as pl
 import wandb
 from torchmetrics.utilities.data import to_onehot
+from monai.losses import DiceLoss
 from tqdm import tqdm
 
 from echo_diffusion.losses.dice_loss import DiceLoss
@@ -16,6 +17,7 @@ from echo_diffusion.models.encoder import Encoder
 import numpy as np
 import einops
 import matplotlib
+
 
 
 class EchoVAE(pl.LightningModule):
@@ -285,11 +287,10 @@ class EchoVAE(pl.LightningModule):
     def log_images(self, title, num_images, img_dict):
         # TODO: move to image logger callback
         for k in img_dict.keys():
-            print(k, img_dict[k].shape)
-            if len(img_dict[k].shape) == 4:
+            if len(img_dict[k].shape) == 4: # if images is gt segment mask then convert it into viridis color space
                 images = einops.rearrange(img_dict[k], 'b c h w -> b h w c')
             else:
-                images = matplotlib.cm.get_cmap('viridis')(img_dict[k])[..., :3]
+                images = matplotlib.cm.get_cmap('viridis')(img_dict[k]/img_dict[k].max())[..., :3]
             vis_image = np.vstack(images[0:num_images])
             self.logger.experiment.log({
                 title: wandb.Image(vis_image)})

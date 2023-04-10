@@ -1,0 +1,7 @@
+outputs/
+logs/
+lightning_logs/
+.vscode/
+.venv/
+.ipynb_checkpoints/
+*.pyc

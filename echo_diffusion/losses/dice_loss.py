@@ -93,4 +93,17 @@ class DiceLoss(torch.nn.Module):
         self.eps = eps
 
     def forward(self, input, target):
-        return 1 - tversky_score(input, target, beta=0.5, bg=False, nan_score=1.0, no_fg_score=1.0, reduction="elementwise_mean", apply_activation=True)
+        # convert to one-hot
+        n_classes = input.shape[1]
+        if n_classes > 1:
+            target = F.one_hot(target, n_classes).permute(0, 3, 1, 2).float()
+        else:
+            target = target.unsqueeze(1).float()
+        
+        # compute dice
+        input = torch.softmax(input, dim=1)
+        intersection = (input * target).sum(dim=(2, 3))
+        union = (input + target).sum(dim=(2, 3))
+        dice = (2 * intersection + self.eps) / (union + self.eps)
+        return 1 - dice.mean()
+        # return 1 - tversky_score(input, target, beta=0.5, bg=False, nan_score=1.0, no_fg_score=1.0, reduction="elementwise_mean", apply_activation=True)
