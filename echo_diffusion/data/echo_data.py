@@ -33,6 +33,7 @@ class EchoDataset(Dataset):
                                               mode="bilinear", align_corners=False)[0]
         mask = torch.nn.functional.interpolate(mask[None, None], size=self.img_size,
                                                mode="nearest")[0, 0].long()
+        mask[mask == 3] = 0
         return {"image": img.permute(1, 2, 0), "segmap": mask}
 
 
